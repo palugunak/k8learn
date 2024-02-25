@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sega
+spec:
+  containers:
+  - name: tails
+    image: busybox
+    command: ['sleep','30']
+  - name: sonic
+    image: nginx:1.14.2
+    env:
+    - name: NGINX
+      value: "8080"

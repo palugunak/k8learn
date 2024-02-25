@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: ubuntu-sleeper
+spec:
+  containers:
+    - name: ubuntu-sleeper
+      image: ubuntu-sleeper
+      command: ["sleep2.0"]
+      args: ["10"]
