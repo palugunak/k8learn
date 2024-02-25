@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod1
+  name: pod1
+  namespace: k8session
+spec:
+  volumes:
+  - name: paluguna-vol
+    emptyDir:
+    sizelimit: 500Mi
+  containers:
+  - image: nginx
+    name: pod1
+    volumeMounts:
+    - name: paluguna-vol
+     mountPath: /tmp/paluguna
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
