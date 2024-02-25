@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2024-02-10T16:39:40Z"
+  labels:
+    run: frontends
+  name: frontends
+  namespace: default
+  resourceVersion: "991881"
+  uid: 0c54c622-9f5d-485f-8d84-4108d486d91d
+spec:
+  containers:
+  - args:
+    - replicasets=5
+    image: nginx
+    imagePullPolicy: Always
+    name: frontends
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-chbzl
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minikube
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-chbzl
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-02-10T16:39:40Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-02-10T16:39:40Z"
+    message: 'containers with unready status: [frontend]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-02-10T16:39:40Z"
+    message: 'containers with unready status: [frontend]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-02-10T16:39:40Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://4811ae24191d8ccb9d2daedb04f5e0b66bf97e9f33d5e23a026cecda1e81a111
+    image: busybox:latest
+    imageID: docker-pullable://busybox@sha256:6d9ac9237a84afe1516540f40a0fafdc86859b2141954b4d643af7066d598b74
+    lastState:
+      terminated:
+        containerID: docker://4811ae24191d8ccb9d2daedb04f5e0b66bf97e9f33d5e23a026cecda1e81a111
+        exitCode: 127
+        finishedAt: "2024-02-10T16:40:19Z"
+        message: 'failed to create shim task: OCI runtime create failed: runc create
+          failed: unable to start container process: exec: "replicasets=5": executable
+          file not found in $PATH: unknown'
+        reason: ContainerCannotRun
+        startedAt: "2024-02-10T16:40:19Z"
+    name: frontend
+    ready: false
+    restartCount: 3
+    started: false
+    state:
+      waiting:
+        message: back-off 40s restarting failed container=frontend pod=frontend_default(0c54c622-9f5d-485f-8d84-4108d486d91d)
+        reason: CrashLoopBackOff
+  hostIP: 192.168.49.2
+  phase: Running
+  podIP: 10.244.0.244
+  podIPs:
+  - ip: 10.244.0.244
+  qosClass: BestEffort
+  startTime: "2024-02-10T16:39:40Z"
